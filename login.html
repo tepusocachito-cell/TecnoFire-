@@ -540,7 +540,7 @@ document.getElementById('btnLogin').addEventListener('click', () => {
     btn.classList.remove('loading');
     if (USUARIOS[email] && USUARIOS[email] === pwd) {
       showAlert('¡Acceso concedido! Redirigiendo…', 'success');
-      setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+      setTimeout(() => { window.location.href = 'app.html'; }, 1200);
     } else {
       showAlert('Correo o contraseña incorrectos');
     }
@@ -555,21 +555,41 @@ document.getElementById('email').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('password').focus();
 });
 
-/* ── BIOMÉTRICO (DEMO) ── */
+/* ── BIOMÉTRICO ── requiere correo y contraseña válidos primero */
 document.getElementById('btnBio').addEventListener('click', () => {
-  showAlert('Leyendo huella… acceso concedido ✅', 'success');
-  setTimeout(() => { window.location.href = 'index.html'; }, 1300);
-});
-document.getElementById('btnFace').addEventListener('click', () => {
-  showAlert('Reconocimiento facial exitoso ✅', 'success');
-  setTimeout(() => { window.location.href = 'index.html'; }, 1300);
+  const email = document.getElementById('email').value.trim();
+  const pwd   = document.getElementById('password').value;
+  if (!email || !pwd) {
+    showAlert('Ingresa tu correo y contraseña primero para usar la huella', 'error');
+    return;
+  }
+  if (!USUARIOS[email] || USUARIOS[email] !== pwd) {
+    showAlert('Credenciales incorrectas. Verifica tu correo y contraseña', 'error');
+    return;
+  }
+  showAlert('Huella verificada junto a tus credenciales ✅', 'success');
+  setTimeout(() => { window.location.href = 'app.html'; }, 1300);
 });
 
-/* ── SOCIALES (DEMO) ── */
+document.getElementById('btnFace').addEventListener('click', () => {
+  const email = document.getElementById('email').value.trim();
+  const pwd   = document.getElementById('password').value;
+  if (!email || !pwd) {
+    showAlert('Ingresa tu correo y contraseña primero para usar Face ID', 'error');
+    return;
+  }
+  if (!USUARIOS[email] || USUARIOS[email] !== pwd) {
+    showAlert('Credenciales incorrectas. Verifica tu correo y contraseña', 'error');
+    return;
+  }
+  showAlert('Face ID verificado junto a tus credenciales ✅', 'success');
+  setTimeout(() => { window.location.href = 'app.html'; }, 1300);
+});
+
+/* ── SOCIALES ── no disponibles en versión demo */
 ['btnGoogle','btnMicrosoft'].forEach(id => {
   document.getElementById(id).addEventListener('click', () => {
-    showAlert('Autenticando con proveedor…', 'success');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1300);
+    showAlert('Autenticación social no disponible en esta versión. Usa correo y contraseña.', 'error');
   });
 });
 </script>

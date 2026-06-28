@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TecnoFire PRO</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="spinner"></div>
+    <h2>TecnoFire<span>PRO</span></h2>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- MODAL CONFIRMACIÓN DE COMPRA -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <h3>¡Compra realizada!</h3>
+    <p>Tu pedido ha sido procesado correctamente. Recibirás confirmación pronto.</p>
+    <div class="modal-stats" id="modalStats"></div>
+    <button id="modalCerrar" class="btn-modal">Entendido</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="logo">
+    <span class="logo-icon">🔥</span>
+    <span class="logo-text">TecnoFire</span>
+  </div>
+
+  <nav>
+    <ul id="navList">
+      <li class="active" data-seccion="inicio">
+        <i class="fa-solid fa-house"></i>
+        <span>Inicio</span>
+      </li>
+      <li data-seccion="productos">
+        <i class="fa-solid fa-box"></i>
+        <span>Productos</span>
+      </li>
+      <li data-seccion="favoritos">
+        <i class="fa-solid fa-heart"></i>
+        <span>Favoritos</span>
+        <span id="contadorFavoritos" class="badge hidden">0</span>
+      </li>
+      <li data-seccion="carrito" id="navCarrito">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Carrito</span>
+        <span id="contadorCarrito" class="badge hidden">0</span>
+      </li>
+      <li data-seccion="dashboard">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+      </li>
+      <li data-seccion="perfil">
+        <i class="fa-solid fa-user"></i>
+        <span>Perfil</span>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <li id="darkButton">
+      <i class="fa-solid fa-moon"></i>
+      <span>Modo oscuro</span>
+    </li>
+  </div>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="contenido" id="contenido">
+
+  <!-- HEADER -->
+  <header>
+    <button id="menu" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="busqueda">
+      <i class="fa-solid fa-search"></i>
+      <input type="text" id="buscar" placeholder="Buscar productos..." autocomplete="off">
+      <button id="limpiarBusqueda" class="hidden" aria-label="Limpiar búsqueda">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="header-acciones">
+      <button class="icon-btn" id="btnNotif" aria-label="Notificaciones">
+        <i class="fa-solid fa-bell"></i>
+        <span id="notifBadge" class="badge hidden">0</span>
+      </button>
+      <div class="usuario">
+        <img src="https://i.pravatar.cc/100?img=3" alt="Foto de perfil" id="fotoHeader">
+        <div class="usuario-info">
+          <h4 id="nombreHeader">Administrador</h4>
+          <p id="correoHeader">admin@tecnofire.com</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== SECCIÓN: INICIO ========== -->
+  <section id="sec-inicio" class="seccion activa">
+
+    <!-- BANNER -->
+    <div class="banner">
+      <div class="banner-texto">
+        <span class="banner-tag">🔥 Oferta del día</span>
+        <h1>La mejor tecnología<br><span>al mejor precio</span></h1>
+        <p>Encuentra laptops, monitores, accesorios y más. Envío gratis en pedidos mayores a C$5,000.</p>
+        <div class="banner-botones">
+          <button class="btn-primario" onclick="navegarSeccion('productos')">
+            <i class="fa-solid fa-bolt"></i> Ver productos
+          </button>
+          <button class="btn-secundario" onclick="navegarSeccion('dashboard')">
+            Ver estadísticas
+          </button>
+        </div>
+      </div>
+      <div class="banner-imagen">
+        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=700" alt="Tecnología">
+      </div>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="estadisticas">
+      <div class="card-stat">
+        <div class="card-stat-icon" style="background:#eff6ff">
+          <i class="fa-solid fa-box" style="color:#2563eb"></i>
+        </div>
+        <div>
+          <h2 id="productosTotal">0</h2>
+          <p>Productos</p>
+        </div>
+      </div>
+      <div class="card-stat">
+        <div class="card-stat-icon" style="background:#f0fdf4">
+          <i class="fa-solid fa-bag-shopping" style="color:#16a34a"></i>
+        </div>
+        <div>
+          <h2 id="ventasTotal">248</h2>
+          <p>Ventas totales</p>
+        </div>
+      </div>
+      <div class="card-stat">
+        <div class="card-stat-icon" style="background:#fff7ed">
+          <i class="fa-solid fa-users" style="color:#ea580c"></i>
+        </div>
+        <div>
+          <h2 id="clientesTotal">132</h2>
+          <p>Clientes</p>
+        </div>
+      </div>
+      <div class="card-stat">
+        <div class="card-stat-icon" style="background:#fdf4ff">
+          <i class="fa-solid fa-coins" style="color:#9333ea"></i>
+        </div>
+        <div>
+          <h2 id="gananciasTotal">C$0</h2>
+          <p>Ganancias</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="seccion-header">
+      <h2>Categorías</h2>
+      <span class="seccion-sub">Explora por tipo de producto</span>
+    </div>
+    <div class="categoria-grid">
+      <div class="categoria" data-cat="Laptop">
+        <span class="cat-emoji">💻</span>
+        <p>Laptops</p>
+      </div>
+      <div class="categoria" data-cat="Monitor">
+        <span class="cat-emoji">🖥️</span>
+        <p>Monitores</p>
+      </div>
+      <div class="categoria" data-cat="Teclado">
+        <span class="cat-emoji">⌨️</span>
+        <p>Teclados</p>
+      </div>
+      <div class="categoria" data-cat="Mouse">
+        <span class="cat-emoji">🖱️</span>
+        <p>Mouse</p>
+      </div>
+      <div class="categoria" data-cat="Audio">
+        <span class="cat-emoji">🎧</span>
+        <p>Audio</p>
+      </div>
+      <div class="categoria" data-cat="Celular">
+        <span class="cat-emoji">📱</span>
+        <p>Celulares</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <div class="seccion-header" style="margin-top:40px">
+      <h2>Productos destacados</h2>
+      <button class="ver-todos" onclick="navegarSeccion('productos')">Ver todos →</button>
+    </div>
+    <div class="productos" id="productosDestacados"></div>
+
+  </section>
+
+  <!-- ========== SECCIÓN: PRODUCTOS ========== -->
+  <section id="sec-productos" class="seccion">
+    <div class="seccion-header">
+      <h2>Todos los productos</h2>
+      <div class="filtros">
+        <select id="filtroCategoria">
+          <option value="">Todas las categorías</option>
+          <option value="Laptop">Laptops</option>
+          <option value="Monitor">Monitores</option>
+          <option value="Teclado">Teclados</option>
+          <option value="Mouse">Mouse</option>
+          <option value="Audio">Audio</option>
+          <option value="Celular">Celulares</option>
+          <option value="Disco">Discos</option>
+        </select>
+        <select id="filtroOrden">
+          <option value="">Ordenar por</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="nombre">Nombre A-Z</option>
+        </select>
+      </div>
+    </div>
+    <div id="resultadosBusqueda" class="resultado-info hidden"></div>
+    <div class="productos" id="productosGrid"></div>
+    <div id="sinResultados" class="sin-resultados hidden">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <p>No se encontraron productos</p>
+      <button onclick="limpiarFiltros()">Ver todos</button>
+    </div>
+  </section>
+
+  <!-- ========== SECCIÓN: FAVORITOS ========== -->
+  <section id="sec-favoritos" class="seccion">
+    <div class="seccion-header">
+      <h2>❤️ Mis Favoritos</h2>
+      <button class="btn-danger" id="limpiarFavoritos">Limpiar todo</button>
+    </div>
+    <div class="productos" id="productosFavoritos"></div>
+    <div id="favoritosVacio" class="sin-resultados">
+      <i class="fa-solid fa-heart-crack"></i>
+      <p>No tienes productos favoritos aún</p>
+      <button onclick="navegarSeccion('productos')">Explorar productos</button>
+    </div>
+  </section>
+
+  <!-- ========== SECCIÓN: DASHBOARD ========== -->
+  <section id="sec-dashboard" class="seccion">
+    <div class="seccion-header">
+      <h2>📊 Dashboard</h2>
+      <span class="seccion-sub">Resumen de la tienda</span>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-card-top">
+          <span>Total de productos</span>
+          <i class="fa-solid fa-box" style="color:#2563eb"></i>
+        </div>
+        <h2 id="dash-productos">0</h2>
+        <p class="dash-change positive">↑ Activos en catálogo</p>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-top">
+          <span>En carrito ahora</span>
+          <i class="fa-solid fa-cart-shopping" style="color:#ea580c"></i>
+        </div>
+        <h2 id="dash-carrito">0</h2>
+        <p class="dash-change">ítems seleccionados</p>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-top">
+          <span>Valor del carrito</span>
+          <i class="fa-solid fa-coins" style="color:#9333ea"></i>
+        </div>
+        <h2 id="dash-valor">C$0</h2>
+        <p class="dash-change positive">↑ listo para comprar</p>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-top">
+          <span>Favoritos guardados</span>
+          <i class="fa-solid fa-heart" style="color:#ec4899"></i>
+        </div>
+        <h2 id="dash-favoritos">0</h2>
+        <p class="dash-change">productos en tu lista</p>
+      </div>
+    </div>
+
+    <div class="dash-tabla-wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+        <h3 style="margin-bottom:0">Inventario de productos</h3>
+        <div style="display:flex;gap:10px">
+          <button id="btnExportExcel" style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:#16a34a;color:white;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s">
+            <i class="fa-solid fa-file-excel"></i> Exportar Excel
+          </button>
+          <button id="btnExportPDF" style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:#dc2626;color:white;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s">
+            <i class="fa-solid fa-file-pdf"></i> Exportar PDF
+          </button>
+        </div>
+      </div>
+      <table class="dash-tabla">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="dashTabla"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== SECCIÓN: PERFIL ========== -->
+  <section id="sec-perfil" class="seccion">
+    <div class="perfil-container">
+      <div class="perfil-card">
+        <div class="perfil-avatar-wrap">
+          <img src="https://i.pravatar.cc/150?img=3" alt="Avatar" id="perfilFoto" class="perfil-avatar">
+          <label class="btn-cambiar-foto" for="inputFoto">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+          <input type="file" id="inputFoto" accept="image/*" style="display:none">
+        </div>
+        <div class="perfil-datos">
+          <h2 id="perfilNombre">Administrador</h2>
+          <p id="perfilCorreo">admin@tecnofire.com</p>
+          <span class="perfil-badge">Administrador</span>
+        </div>
+      </div>
+
+      <div class="perfil-form">
+        <h3>Editar perfil</h3>
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="inputNombre" placeholder="Tu nombre" value="Administrador">
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico</label>
+          <input type="email" id="inputCorreo" placeholder="tu@correo.com" value="admin@tecnofire.com">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="inputTel" placeholder="+505 8888-8888">
+        </div>
+        <button class="btn-primario" id="guardarPerfil">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+        </button>
+      </div>
+
+      <div class="perfil-historial">
+        <h3>Historial de compras</h3>
+        <div id="historialCompras">
+          <p class="texto-vacio">No hay compras registradas aún.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL CARRITO -->
+  <div id="carritoPanel">
+    <div class="carrito-header">
+      <h2>🛒 Carrito</h2>
+      <button id="cerrarCarrito" aria-label="Cerrar carrito">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="listaCarrito" class="carrito-lista"></div>
+    <div class="carrito-footer">
+      <div class="carrito-total-row">
+        <span>Total</span>
+        <h2 id="total">C$0</h2>
+      </div>
+      <button id="comprar" class="btn-comprar">
+        <i class="fa-solid fa-credit-card"></i> Finalizar compra
+      </button>
+      <button class="btn-vaciar" id="vaciarCarrito">Vaciar carrito</button>
+    </div>
+  </div>
+  <div id="carritoOverlay"></div>
+
+  <!-- RELOJ -->
+  <div id="reloj"></div>
+
+  <footer>
+    <p>© 2026 TecnoFire PRO · Managua, Nicaragua</p>
+  </footer>
+
+</div><!-- fin .contenido -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+  /* ── PROTECCIÓN DE LOGIN ── */
+  // Descomenta estas líneas para activar la protección real:
+  // const USUARIOS_VÁLIDOS = {'admin@tecnofire.com':'123456','demo@tecnofire.com':'demo123'};
+  // const sesion = sessionStorage.getItem('tf_sesion');
+  // if (!sesion) { window.location.href = 'login.html'; }
+
+  /* ── EXPORTAR EXCEL ── */
+  document.getElementById('btnExportExcel').addEventListener('click', () => {
+    const datos = PRODUCTOS.map(p => ({
+      'ID': p.id,
+      'Producto': p.nombre,
+      'Categoría': p.categoria,
+      'Precio (C$)': p.precio,
+      'Estrellas': p.estrellas,
+      'Badge': p.badge || '—',
+      'Estado': 'Activo'
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(datos);
+    // Ancho de columnas
+    ws['!cols'] = [
+      {wch:6},{wch:32},{wch:14},{wch:14},{wch:10},{wch:14},{wch:10}
+    ];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Inventario');
+
+    // Hoja de resumen
+    const resumen = [
+      ['TecnoFire PRO – Reporte de Inventario'],
+      ['Fecha:', new Date().toLocaleDateString('es-NI')],
+      ['Total productos:', PRODUCTOS.length],
+      ['Valor total:', 'C$ ' + PRODUCTOS.reduce((s,p)=>s+p.precio,0).toLocaleString()],
+    ];
+    const ws2 = XLSX.utils.aoa_to_sheet(resumen);
+    XLSX.utils.book_append_sheet(wb, ws2, 'Resumen');
+
+    XLSX.writeFile(wb, 'TecnoFire_Inventario_' + new Date().toISOString().slice(0,10) + '.xlsx');
+    toast('Excel exportado correctamente 📊', '✅');
+  });
+
+  /* ── EXPORTAR PDF ── */
+  document.getElementById('btnExportPDF').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+
+    // Encabezado
+    doc.setFillColor(15, 23, 42);
+    doc.rect(0, 0, 210, 38, 'F');
+    doc.setTextColor(255, 107, 0);
+    doc.setFontSize(22); doc.setFont('helvetica','bold');
+    doc.text('TecnoFire PRO', 14, 18);
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(11); doc.setFont('helvetica','normal');
+    doc.text('Reporte de Inventario', 14, 27);
+    doc.setFontSize(9);
+    doc.text('Managua, Nicaragua  ·  ' + new Date().toLocaleDateString('es-NI'), 14, 34);
+
+    // Resumen rápido
+    doc.setTextColor(30,30,30);
+    doc.setFontSize(10); doc.setFont('helvetica','bold');
+    doc.text('Resumen', 14, 50);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9);
+    doc.text(`Total productos: ${PRODUCTOS.length}`, 14, 58);
+    doc.text(`Valor total inventario: C$ ${PRODUCTOS.reduce((s,p)=>s+p.precio,0).toLocaleString()}`, 80, 58);
+    doc.text(`Generado: ${new Date().toLocaleString('es-NI')}`, 14, 64);
+
+    // Tabla
+    doc.autoTable({
+      startY: 72,
+      head: [['#','Producto','Categoría','Precio (C$)','★','Estado']],
+      body: PRODUCTOS.map(p => [
+        p.id, p.nombre, p.categoria,
+        'C$ ' + p.precio.toLocaleString(),
+        '★'.repeat(p.estrellas),
+        'Activo'
+      ]),
+      headStyles: {
+        fillColor: [37, 99, 235],
+        textColor: 255,
+        fontStyle: 'bold',
+        fontSize: 9,
+      },
+      bodyStyles: { fontSize: 8.5, textColor: [30,30,30] },
+      alternateRowStyles: { fillColor: [241,245,249] },
+      columnStyles: {
+        0: {cellWidth:10, halign:'center'},
+        3: {halign:'right'},
+        4: {halign:'center'},
+        5: {halign:'center'},
+      },
+      margin: { left:14, right:14 },
+      styles: { cellPadding: 3, lineColor:[220,220,220], lineWidth:.2 }
+    });
+
+    // Pie de página
+    const pageH = doc.internal.pageSize.getHeight();
+    doc.setFillColor(15, 23, 42);
+    doc.rect(0, pageH-12, 210, 12, 'F');
+    doc.setTextColor(150,150,170); doc.setFontSize(8);
+    doc.text('© 2026 TecnoFire PRO · Managua, Nicaragua · Confidencial', 105, pageH-5, {align:'center'});
+
+    doc.save('TecnoFire_Inventario_' + new Date().toISOString().slice(0,10) + '.pdf');
+    toast('PDF exportado correctamente 📄', '✅');
+  });
+
+  // Hover efecto botones export
+  ['btnExportExcel','btnExportPDF'].forEach(id => {
+    const btn = document.getElementById(id);
+    const orig = btn.style.background;
+    btn.addEventListener('mouseenter', () => btn.style.filter = 'brightness(1.15)');
+    btn.addEventListener('mouseleave', () => btn.style.filter = '');
+  });
+  </script>
+</body>
+</html>
